@@ -4,7 +4,7 @@ Sample project demonstrating a Core Data stack shared between an app and its Sha
 
 - Main app will not automatically reload for Core Data changes from the Share Extension. Consider making use of DarwinNotifications as described in [WWDC 2015 - Session 224](https://developer.apple.com/videos/play/wwdc2015/224/) and below:
 
-```
+``` swift
 let darwinNC = CFNotificationCenterGetDarwinNotifyCenter()
 
 CFNotificationCenterAddObserver(darwinNC, nil, { (_, _, _, _, _) in
@@ -17,7 +17,7 @@ NotificationCenter.default.addObserver(forName: NSNotification.Name("hello"), ob
     print("didUpdateModel or whatever")                                                                                                             }
 ```
 
-```
+``` swift
 let darwinNC = CFNotificationCenterGetDarwinNotifyCenter()
 
 CFNotificationCenterPostNotification(darwinNC, CFNotificationName("APP_MODEL_UPDATED" as CFString), nil, nil, true)

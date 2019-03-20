@@ -41,6 +41,7 @@ class ViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         try! fetchedResultsController.performFetch()
+        configureRefreshControl()
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -54,6 +55,17 @@ class ViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.textLabel?.text = upload.displayString
         return cell
+    }
+
+    private func configureRefreshControl() {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
+        self.refreshControl = refreshControl
+    }
+
+    @objc func handleRefreshControl() {
+        tableView.reloadData()
+        refreshControl?.endRefreshing()
     }
 
 }

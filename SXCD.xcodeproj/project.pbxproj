@@ -20,6 +20,11 @@
 		EA802C4122424AA400BBD42B /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA802C4022424AA400BBD42B /* ShareViewController.swift */; };
 		EA802C4422424AA400BBD42B /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA802C4222424AA400BBD42B /* MainInterface.storyboard */; };
 		EA802C4822424AA400BBD42B /* ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = EA802C3E22424AA400BBD42B /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		EA802C4E2242527F00BBD42B /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA802C372241427100BBD42B /* AppGroup.swift */; };
+		EA802C4F2242528600BBD42B /* Upload+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA802C30224138FC00BBD42B /* Upload+CoreDataClass.swift */; };
+		EA802C502242528A00BBD42B /* Upload+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA802C31224138FC00BBD42B /* Upload+CoreDataProperties.swift */; };
+		EA802C512242528C00BBD42B /* SXCD.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EA802C1D22412CC300BBD42B /* SXCD.xcdatamodeld */; };
+		EA802C522242563F00BBD42B /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA802C352241421100BBD42B /* SessionManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +69,7 @@
 		EA802C4022424AA400BBD42B /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		EA802C4322424AA400BBD42B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		EA802C4522424AA400BBD42B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EA802C4D22424D9500BBD42B /* ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareExtension.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,16 +111,14 @@
 		EA802C1522412CC300BBD42B /* SXCD */ = {
 			isa = PBXGroup;
 			children = (
+				EA802C532242564400BBD42B /* Common */,
 				EA802C3422413CCD00BBD42B /* SXCD.entitlements */,
-				EA802C2F224138E800BBD42B /* Model */,
 				EA802C1622412CC300BBD42B /* AppDelegate.swift */,
 				EA802C1822412CC300BBD42B /* ViewController.swift */,
 				EA802C1A22412CC300BBD42B /* Main.storyboard */,
 				EA802C2022412CC500BBD42B /* Assets.xcassets */,
 				EA802C2222412CC500BBD42B /* LaunchScreen.storyboard */,
 				EA802C2522412CC500BBD42B /* Info.plist */,
-				EA802C352241421100BBD42B /* SessionManager.swift */,
-				EA802C372241427100BBD42B /* AppGroup.swift */,
 			);
 			path = SXCD;
 			sourceTree = "<group>";
@@ -132,11 +136,22 @@
 		EA802C3F22424AA400BBD42B /* ShareExtension */ = {
 			isa = PBXGroup;
 			children = (
+				EA802C4D22424D9500BBD42B /* ShareExtension.entitlements */,
 				EA802C4022424AA400BBD42B /* ShareViewController.swift */,
 				EA802C4222424AA400BBD42B /* MainInterface.storyboard */,
 				EA802C4522424AA400BBD42B /* Info.plist */,
 			);
 			path = ShareExtension;
+			sourceTree = "<group>";
+		};
+		EA802C532242564400BBD42B /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				EA802C372241427100BBD42B /* AppGroup.swift */,
+				EA802C352241421100BBD42B /* SessionManager.swift */,
+				EA802C2F224138E800BBD42B /* Model */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,10 +209,18 @@
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
 							};
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
 						};
 					};
 					EA802C3D22424AA400BBD42B = {
 						CreatedOnToolsVersion = 10.1;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -261,6 +284,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA802C4122424AA400BBD42B /* ShareViewController.swift in Sources */,
+				EA802C4F2242528600BBD42B /* Upload+CoreDataClass.swift in Sources */,
+				EA802C522242563F00BBD42B /* SessionManager.swift in Sources */,
+				EA802C502242528A00BBD42B /* Upload+CoreDataProperties.swift in Sources */,
+				EA802C4E2242527F00BBD42B /* AppGroup.swift in Sources */,
+				EA802C512242528C00BBD42B /* SXCD.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -461,6 +489,7 @@
 		EA802C4A22424AA400BBD42B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = X3N9J49FU2;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
@@ -480,6 +509,7 @@
 		EA802C4B22424AA400BBD42B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = X3N9J49FU2;
 				INFOPLIST_FILE = ShareExtension/Info.plist;

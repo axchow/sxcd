@@ -14,7 +14,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    lazy var sessionManager: SessionManager = SessionManager()
+    lazy var sessionManager: SessionManager = {
+        let id = Bundle.main.bundleIdentifier!
+        return SessionManager(id: id, context: context)
+    }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -46,15 +49,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
-        sessionManager.backgroundCompletionHandler = completionHandler
+
+        print(#function)
+        print(identifier)
+
+        if identifier == Bundle.main.bundleIdentifier {
+            sessionManager.backgroundCompletionHandler = completionHandler
+
+        } else {
+            let shareSessionManager = SessionManager(id: identifier, context: context)
+            shareSessionManager.backgroundCompletionHandler = completionHandler
+        }
+
     }
 
     // MARK: - Core Data stack
 
     private lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
 
-        let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let persistentStoreURL = documentDirectory.appendingPathComponent("SXCD.sqlite")
+        let persistentStoreURL = AppGroup.directory.appendingPathComponent("SXCD.sqlite", isDirectory: false)
 
         let modelURL = Bundle.main.url(forResource: "SXCD", withExtension: "momd")!
         let model = NSManagedObjectModel(contentsOf: modelURL)!

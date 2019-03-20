@@ -5,7 +5,8 @@ import CoreData
 public class Upload: NSManagedObject {
 
     convenience init(url: URL, context: NSManagedObjectContext) {
-        self.init(context: context)
+        let entity = NSEntityDescription.entity(forEntityName: "Upload", in: context)!
+        self.init(entity: entity, insertInto: context)
 
         self.urlString = url.absoluteString
         self.uuid = UUID().uuidString
@@ -20,7 +21,11 @@ public class Upload: NSManagedObject {
     var displayString: String {
 
         if uploadedBytes == fileSize {
-            return "Uploaded"
+            let d = DateFormatter()
+            d.dateStyle = .none
+            d.timeStyle = .medium
+
+            return "Uploaded \(d.string(from: uploadDate! as Date))"
 
         } else {
             let s1 = ByteCountFormatter.string(fromByteCount: uploadedBytes, countStyle: .file)

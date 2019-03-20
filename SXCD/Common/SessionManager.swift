@@ -6,22 +6,21 @@ class SessionManager: NSObject {
     var backgroundCompletionHandler: (() -> Void)? = nil
 
     private var urlSession: URLSession!
+    private var context: NSManagedObjectContext!
 
-    private lazy var context: NSManagedObjectContext = {
-        return (UIApplication.shared.delegate as! AppDelegate).context
-    }()
-
-
-    override init() {
+    
+    init(id: String, context: NSManagedObjectContext) {
         super.init()
-        configureURLSession()
+        self.context = context
+        configureURLSession(id: id)
     }
 
 
-    private func configureURLSession() {
+    private func configureURLSession(id: String) {
 
-        let config = URLSessionConfiguration.background(withIdentifier: AppGroup.identifier)
+        let config = URLSessionConfiguration.background(withIdentifier: id)
         config.isDiscretionary = true
+        config.sharedContainerIdentifier = AppGroup.identifier
 
         urlSession = URLSession(configuration: config, delegate: self, delegateQueue: OperationQueue.main)
 
@@ -55,6 +54,9 @@ extension SessionManager: URLSessionDelegate {
 extension SessionManager: URLSessionDataDelegate {
 
     func urlSession(_ session: URLSession, task: URLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64) {
+
+        print(ByteCountFormatter.string(fromByteCount: totalBytesSent, countStyle: .file))
+
         let request = NSFetchRequest<Upload>(entityName: "Upload")
         request.predicate = NSPredicate(format: "uuid == %@", task.taskDescription!)
 
